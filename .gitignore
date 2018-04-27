@@ -2,13 +2,8 @@
 .idea/
 target/
 *.class
-
-.idea/
 *.iml
-
-*.log
 log/
-logs/
 
 *.jar
 *.war
