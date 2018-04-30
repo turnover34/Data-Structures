@@ -99,6 +99,13 @@ public class ManyMethodTest {
 
     @Test
     public void testAscOrDescOrderSort() throws Exception {
+        int[] array = {4, 2, 7, 10, 11, 0, -2, 5};
+        int[] ascArray = {-2, 0, 2, 4, 5, 7, 10, 11};
+        int[] desArray = {11, 10, 7, 5, 4, 2, 0, -2};
+        assertArrayEquals(ascArray, ent.acsOrderSort(array));
+        assertArrayEquals(ascArray, ent.ascOrDescOrderSort(array,false));
+        assertArrayEquals(desArray, ent.descOrderSort(array));
+        assertArrayEquals(desArray, ent.ascOrDescOrderSort(array, true));
     }
 
     @Test

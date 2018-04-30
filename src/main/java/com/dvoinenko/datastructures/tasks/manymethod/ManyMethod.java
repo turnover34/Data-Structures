@@ -1,5 +1,8 @@
 package com.dvoinenko.datastructures.tasks.manymethod;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class ManyMethod {
 
     public void printCharArray(char[] chars) {
@@ -125,15 +128,16 @@ public class ManyMethod {
         return result;
     }
 
-    public void ascOrDescOrderSort(int[] array, boolean order) {
+    public int[] ascOrDescOrderSort(int[] array, boolean order) {
         if (order) {
             descOrderSort(array);
-            return;
+            return array;
         }
         acsOrderSort(array);
+        return array;
     }
 
-    public void acsOrderSort(int[] array) {
+    public int[] acsOrderSort(int[] array) {
         for (int gap = array.length/2; gap > 0 ; gap /= 2) {
             for (int i = gap; i < array.length; i++) {
                 int temp = array[i];
@@ -144,9 +148,10 @@ public class ManyMethod {
                 array[j] = temp;
             }
         }
+        return array;
     }
 
-    public void descOrderSort(int[] array) {
+    public int[] descOrderSort(int[] array) {
         for (int gap = array.length/2; gap > 0 ; gap /= 2) {
             for (int i = gap; i < array.length; i++) {
                 int temp = array[i];
@@ -157,6 +162,7 @@ public class ManyMethod {
                 array[j] = temp;
             }
         }
+        return array;
     }
 
 
@@ -248,5 +254,4 @@ public class ManyMethod {
         }
         return max;
     }
-
 }
