@@ -117,10 +117,10 @@ public class ManyMethodTest {
     }
 
     @Test
-    public void testSquareArrayCreator() throws Exception {
+    public void testCreate() throws Exception {
         int[] first = {1, 2, 3};
         int[] second = {4, 5, 6};
-        int[][] expected = {{4, 5, 6}, {8, 10, 12}, {12, 15, 18}};
+        int[] expected = {4, 10, 18};
         assertArrayEquals(expected, ent.create(first, second));
     }
 
@@ -148,13 +148,13 @@ public class ManyMethodTest {
     }
 
     @Test
-    public void testReverseTheString() throws Exception {
+    public void TestReverse() throws Exception {
         String exp = "olleH";
         assertEquals("Hello", ent.reverse(exp));
     }
 
     @Test
-    public void testMergeTwoIntArrays() throws Exception {
+    public void testMerge() throws Exception {
         int[] first = {3, 5, 7};
         int[] second = {8, 2};
         int[] exp = {3, 5, 7, 8, 2};
@@ -162,7 +162,7 @@ public class ManyMethodTest {
     }
 
     @Test
-    public void testMaxArrayElement() throws Exception {
+    public void testMaxElement() throws Exception {
         int[] arrsy = {-2, 3, 5, 9, 0, 7};
         assertEquals(9, ent.maxElement(arrsy));
     }

@@ -150,13 +150,11 @@ public class ManyMethod {
         return array;
     }
 
-
-
     public boolean check(byte[] array) {
         for (int i = 0; i < array.length; i++) {
-            byte curr = array[i];
+            byte current = array[i];
             for (int j = i + 1; j < array.length; j++) {
-                if (curr == array[j]) {
+                if (current == array[j]) {
                     return true;
                 }
             }
@@ -164,15 +162,13 @@ public class ManyMethod {
         return false;
     }
 
-    public int[][] create(int[] first, int[] second) {
+    public int[] create(int[] first, int[] second) {
         int size = first.length;
-        int[][] squareArray = new int[size][size];
+        int[] array = new int[size];
         for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                squareArray[i][j] = first[i] * second[j];
-            }
+                array[i] = first[i] * second[i];
         }
-        return squareArray;
+        return array;
     }
 
     public int[] reverse(int[] incomeIntArray){
