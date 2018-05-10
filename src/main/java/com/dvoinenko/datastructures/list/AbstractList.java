@@ -19,9 +19,17 @@ public abstract class AbstractList implements List{
         return indexOf(object) != -1;
     }
 
-    public void validateIndex(int index) {
-        if (index < 0 && index >= size) {
-            throw new IndexOutOfBoundsException("Index should be between 0 and size, but is" + size);
+    void validateIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index should be between 0 inclusive" +
+                    " and " + size + " exclusive, but is " + index);
+        }
+    }
+
+    void validateIndexToAdd(int index) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Index should be between 0 inclusive "
+                    + "and " + size + " inclusive, but is " + index);
         }
     }
 }

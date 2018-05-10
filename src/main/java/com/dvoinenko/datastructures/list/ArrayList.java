@@ -1,5 +1,7 @@
 package com.dvoinenko.datastructures.list;
 
+import java.util.StringJoiner;
+
 public class ArrayList extends AbstractList {
     private static final int INITIAL_CAPACITY = 10;
     private Object[] array;
@@ -13,7 +15,7 @@ public class ArrayList extends AbstractList {
     }
 
     public void add(Object value, int index) {
-        validateIndex(index);
+        validateIndexToAdd(index);
         if (size == array.length) {
             resize();
         }
@@ -35,10 +37,10 @@ public class ArrayList extends AbstractList {
         return array[index];
     }
 
-    public Object set(Object object, int index) {
+    public Object set(Object value, int index) {
         validateIndex(index);
         Object oldElement = array[index];
-        array[index] = object;
+        array[index] = value;
         return oldElement;
     }
 
@@ -49,37 +51,52 @@ public class ArrayList extends AbstractList {
         size = 0;
     }
 
-    public int indexOf(Object object) {
-        for (int i = 0; i < size; i++) {
-            if (array[i].equals(object)) {
-                return i;
+    public int indexOf(Object value) {
+        if (value == null) {
+            for (int i = 0; i < size ; i++) {
+                if (array[i] == null) {
+                    return i;
+                }
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (value.equals(array[i])) {
+                    return i;
+                }
             }
         }
         return -1;
     }
 
-    public int lastIndexOf(Object object) {
-        for (int i = size - 1; i >= 0; i--) {
-            if (array[i].equals(object)) {
-                return i;
+    public int lastIndexOf(Object value) {
+        if (value == null) {
+            for (int i = size - 1; i >= 0 ; i--) {
+                if (array[i] == null) {
+                    return i;
+                }
             }
+        } else {
+            for (int i = size - 1; i >= 0; i--) {
+                if (value.equals(array[i])) {
+                    return i;
+                }
+            }
+
         }
         return -1;
     }
 
     private void resize() {
-        Object temp[] = new Object [(int) (array.length*1.5)];
+        Object temp[] = new Object [(int) (array.length*1.5 + 1)];
         System.arraycopy(array, 0, temp, 0, size);
         array = temp;
     }
 
-    @Override
     public String toString() {
-        String stringOutput = "Array List object [";
-        for (int i = 0; i < size-1; i++) {
-            stringOutput += array[i] + ", ";
+        StringJoiner result = new StringJoiner(",", "[", "]");
+        for (int i = 0; i < size; i++) {
+           result.add(String.valueOf(array[i]));
         }
-        stringOutput = stringOutput + array[size() - 1] + "]";
-        return stringOutput;
+        return String.valueOf(result);
     }
 }

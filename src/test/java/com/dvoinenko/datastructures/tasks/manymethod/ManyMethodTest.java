@@ -17,17 +17,17 @@ public class ManyMethodTest {
     }
 
     @Test
-    public void testConvertIntArrayToCharArray() throws Exception {
+    public void testConvert() throws Exception {
         int[][] array = {{65, 66, 67}, {68, 69, 70}};
         char[][] chars = {{'A', 'B', 'C'}, {'D', 'E', 'F'}};
-        assertArrayEquals(chars, ent.convertIntArrayToCharArray(array));
+        assertArrayEquals(chars, ent.convert(array));
     }
 
     @Test
-    public void testChangeSignIntArray() throws Exception {
+    public void testChangeSign() throws Exception {
         int[][] array = {{3, 4, 7}, {4, 2, 0}};
         int[][] expected = {{-3, -4, -7}, {-4, -2, 0}};
-        assertArrayEquals(expected, ent.changeSignIntArray(array));
+        assertArrayEquals(expected, ent.changeSign(array));
     }
 
     @Test
@@ -46,9 +46,9 @@ public class ManyMethodTest {
     }
 
     @Test
-    public void testCharArrayToString() throws Exception {
+    public void testToString() throws Exception {
         char[] chars = {'H', 'e', 'l', 'l', 'o'};
-        assertEquals("Hello", ent.charArrayToString(chars));
+        assertEquals("Hello", ent.toString(chars));
     }
 
     @Test
@@ -63,17 +63,17 @@ public class ManyMethodTest {
     }
 
     @Test
-    public void testSearchIntFromBeginning() throws Exception {
+    public void testSearchFromBeginning() throws Exception {
         int[] array = {3, 2, 4, 2, 5, 7};
-        assertEquals(1, ent.searchIntFromBeginning(array, 2));
-        assertEquals(-1, ent.searchIntFromBeginning(array, 6));
+        assertEquals(1, ent.searchFromBeginning(array, 2));
+        assertEquals(-1, ent.searchFromBeginning(array, 6));
     }
 
     @Test
-    public void testSearchIntFromEnding() throws Exception {
+    public void testSearchFromEnding() throws Exception {
         int[] array = {6, 5, 6, 9, 2, 6, 4, 3};
-        assertEquals(5, ent.searchIntFromEnding(array, 6));
-        assertEquals(-1, ent.searchIntFromEnding(array, 7));
+        assertEquals(5, ent.searchFromEnding(array, 6));
+        assertEquals(-1, ent.searchFromEnding(array, 7));
     }
 
     @Test
@@ -94,7 +94,7 @@ public class ManyMethodTest {
     @Test
     public void testroundtoThirdSign() throws Exception {
         double number = 357.89164536;
-        assertEquals(357.891, ent.roundtoThirdSign(number), 3);
+        assertEquals(357.891, ent.round(number), 3);
     }
 
     @Test
@@ -102,18 +102,18 @@ public class ManyMethodTest {
         int[] array = {4, 2, 7, 10, 11, 0, -2, 5};
         int[] ascArray = {-2, 0, 2, 4, 5, 7, 10, 11};
         int[] desArray = {11, 10, 7, 5, 4, 2, 0, -2};
-        assertArrayEquals(ascArray, ent.acsOrderSort(array));
-        assertArrayEquals(ascArray, ent.ascOrDescOrderSort(array,false));
-        assertArrayEquals(desArray, ent.descOrderSort(array));
-        assertArrayEquals(desArray, ent.ascOrDescOrderSort(array, true));
+        assertArrayEquals(ascArray, ent.acsSort(array));
+        assertArrayEquals(ascArray, ent.ascOrDescSort(array,false));
+        assertArrayEquals(desArray, ent.descSort(array));
+        assertArrayEquals(desArray, ent.ascOrDescSort(array, true));
     }
 
     @Test
     public void testCheckForRepeatedElement() throws Exception {
         byte[] firstArray = {2, 6, 10, 3, 2};
         byte[] secondArray = {2, 3, 4, 5, 6, 7, 8};
-        assertTrue( true == ent.checkForRepeatedElement(firstArray));
-        assertFalse( true == ent.checkForRepeatedElement(secondArray));
+        assertTrue( true == ent.check(firstArray));
+        assertFalse( true == ent.check(secondArray));
     }
 
     @Test
@@ -121,14 +121,14 @@ public class ManyMethodTest {
         int[] first = {1, 2, 3};
         int[] second = {4, 5, 6};
         int[][] expected = {{4, 5, 6}, {8, 10, 12}, {12, 15, 18}};
-        assertArrayEquals(expected, ent.squareArrayCreator(first, second));
+        assertArrayEquals(expected, ent.create(first, second));
     }
 
     @Test
-    public void testReverseIntArray() throws Exception {
+    public void testReverse() throws Exception {
         int[] array = {1, 2, 3, 4, 5, 6, 7};
         int[] expArray = {7, 6, 5, 4, 3, 2, 1};
-        assertArrayEquals(expArray, ent.reverseIntArray(array));
+        assertArrayEquals(expArray, ent.reverse(array));
     }
 
     @Test
@@ -150,7 +150,7 @@ public class ManyMethodTest {
     @Test
     public void testReverseTheString() throws Exception {
         String exp = "olleH";
-        assertEquals("Hello", ent.reverseTheString(exp));
+        assertEquals("Hello", ent.reverse(exp));
     }
 
     @Test
@@ -158,13 +158,13 @@ public class ManyMethodTest {
         int[] first = {3, 5, 7};
         int[] second = {8, 2};
         int[] exp = {3, 5, 7, 8, 2};
-        assertArrayEquals(exp, ent.mergeTwoIntArrays(first, second));
+        assertArrayEquals(exp, ent.merge(first, second));
     }
 
     @Test
     public void testMaxArrayElement() throws Exception {
         int[] arrsy = {-2, 3, 5, 9, 0, 7};
-        assertEquals(9, ent.maxArrayElement(arrsy));
+        assertEquals(9, ent.maxElement(arrsy));
     }
 }
 

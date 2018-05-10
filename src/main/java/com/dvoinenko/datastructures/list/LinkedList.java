@@ -1,17 +1,18 @@
 package com.dvoinenko.datastructures.list;
 
+import java.util.StringJoiner;
+
 public class LinkedList extends AbstractList {
-    Node head, tail;
+    private Node head;
+    private Node tail;
 
     public void add(Object value, int index) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException("Index should be between 0 and size, but is" + index);
-        }
+        validateIndexToAdd(index);
         Node newNode = new Node(value);
         if (size == 0) {
             head = tail = newNode;
         }
-        if (index == 0) {
+        else if (index == 0) {
             newNode.next = head;
             head.prev = newNode;
             head = newNode;
@@ -22,9 +23,9 @@ public class LinkedList extends AbstractList {
         } else {
             Node current = getNode(index);
 
-            current.prev.next = newNode;
             newNode.prev = current.prev;
             newNode.next = current;
+            current.prev.next = newNode;
             current.prev = newNode;
         }
         size++;
@@ -48,8 +49,6 @@ public class LinkedList extends AbstractList {
             current = getNode(index);
             current.prev.next = current.next;
             current.next.prev = current.prev;
-            current.prev = null;
-            current.next = null;
         }
         size--;
         return current.value;
@@ -71,44 +70,81 @@ public class LinkedList extends AbstractList {
 
     public void clear() {
         Node current = head;
-        while (current != tail) {
+        while (current != null) {
             Node nextNode = current.next;
-            current.next = current.prev = null;
+            current.next = null;
+            current.prev = null;
             current.value = null;
             current = nextNode;
         }
-        head.next = tail.prev = null;
+        head = tail = null;
         size = 0;
     }
 
     public int indexOf(Object value) {
-        Node current = head;
-        for (int i = 0; i < size; i++) {
-            if (current.value.equals(value)) {
-                return i;
+        int index = 0;
+        if (value == null) {
+            for (Node current = head; current != null; current = current.next) {
+                if (current.value == null) {
+                    return index;
+                }
+                index++;
             }
-            current = current.next;
+        } else {
+            for (Node current = head; current!= null; current = current.next) {
+                if (value.equals(current.value)) {
+                    return index;
+                }
+                index++;
+            }
         }
         return -1;
     }
 
     public int lastIndexOf(Object value) {
-        Node current = tail;
-        for (int i = size - 1; i >= 0; i--) {
-            if (current.value.equals(value)) {
-                return i;
+        int index = size;
+        if (value == null) {
+            for (Node current = tail; current != null; current = current.prev) {
+                index--;
+                if (current.value == null) {
+                    return index;
+                }
             }
-            current = current.prev;
+        } else {
+            for (Node current = tail; current!= null; current = current.prev) {
+                index--;
+                if (value.equals(current.value)) {
+                    return index;
+                }
+            }
         }
         return -1;
     }
 
     private Node getNode(int index) {
         validateIndex(index);
-        Node current = head;
-        for (int i = 0; i < index; i++) {
-            current = current.next;
+        Node current;
+        if (index >= size/2) {
+            current = tail;
+            for (int i = size; i > index ; i--) {
+                current = current.prev;
+            }
+        } else {
+            current = head;
+            for (int i = 0; i < index; i++) {
+                current = current.next;
+            }
         }
         return current;
+    }
+
+    public String toString() {
+        StringJoiner result = new StringJoiner(",", "[", "]");
+        Node current = head;
+        while (current != null) {
+            result.add(String.valueOf(current));
+            current = current.next;
+        }
+        return String.valueOf(result);
     }
 }
