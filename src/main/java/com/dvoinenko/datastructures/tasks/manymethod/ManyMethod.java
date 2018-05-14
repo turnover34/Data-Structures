@@ -55,7 +55,7 @@ public class ManyMethod {
     }
 
     public boolean subArrayCheck(char[] mainArray, char[] subArray) {
-        int mainLength = mainArray.length;
+/*        int mainLength = mainArray.length;
         int subLength = subArray.length;
         String mainArrayString = String.valueOf(mainArray);
         String subArrayString = String.valueOf(subArray);
@@ -65,7 +65,24 @@ public class ManyMethod {
                 return true;
             }
         }
-        return false;
+        return false;*/
+        int mainLength = mainArray.length;
+        int subLength = subArray.length;
+        int i = 0;
+        while (i < mainLength) {
+            if (mainArray[i] == subArray[0]) {
+                int j = 0;
+                while (j < subLength) {
+                    if (mainArray[i++] != subArray[j]) {
+                        return false;
+                    }
+                    j++;
+                }
+
+            }
+            i++;
+        }
+        return true;
     }
 
     public int searchFromBeginning(int[] incomeIntArray, int toSearch) {
