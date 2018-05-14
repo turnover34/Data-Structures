@@ -1,8 +1,10 @@
 package com.dvoinenko.datastructures.list;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.StringJoiner;
 
-public class ArrayList extends AbstractList {
+public class ArrayList extends AbstractList implements Iterable {
     private static final int INITIAL_CAPACITY = 10;
     private Object[] array;
 
@@ -28,6 +30,7 @@ public class ArrayList extends AbstractList {
         validateIndex(index);
         Object removeElement = array[index];
         System.arraycopy(array, index + 1, array, index, size - 1 - index);
+        array[size - 1] = null;
         size--;
         return removeElement;
     }
@@ -98,5 +101,28 @@ public class ArrayList extends AbstractList {
            result.add(String.valueOf(array[i]));
         }
         return String.valueOf(result);
+    }
+
+    public Iterator iterator() {
+        return new ArrayListIterator();
+    }
+    private class ArrayListIterator implements Iterator {
+        private int pointer;
+
+        @Override
+        public boolean hasNext() {
+            return pointer < size;
+        }
+
+        @Override
+        public Object next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("There is no such element in Array List");
+            }
+            Object current = get(pointer);
+            pointer++;
+            return current;
+        }
+
     }
 }

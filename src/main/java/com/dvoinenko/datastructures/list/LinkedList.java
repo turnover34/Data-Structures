@@ -1,8 +1,10 @@
 package com.dvoinenko.datastructures.list;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.StringJoiner;
 
-public class LinkedList extends AbstractList {
+public class LinkedList extends AbstractList implements Iterable {
     private Node head;
     private Node tail;
 
@@ -146,5 +148,53 @@ public class LinkedList extends AbstractList {
             current = current.next;
         }
         return String.valueOf(result);
+    }
+
+    private static class Node {
+        private Object value;
+        private Node prev;
+        private Node next;
+
+        private Node(Object value) {
+            this.value = value;
+        }
+    }
+
+    public Iterator iterator() {
+        return new LinkedListIterator();
+    }
+
+    private class LinkedListIterator implements Iterator {
+
+        private Node nextNode = head;
+        private Node prevNode = tail;
+
+        @Override
+        public boolean hasNext() {
+            return nextNode != null;
+        }
+
+        public boolean hasPrevious() {
+            return prevNode != null;
+        }
+
+        @Override
+        public Object next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("There is no such element in Linked List");
+            }
+            Object result = nextNode.value;
+            nextNode = nextNode.next;
+            return result;
+        }
+
+        public Object previous() {
+            if (!hasPrevious()) {
+                throw new NoSuchElementException("There is no such element in Linked List");
+            }
+            Object result = prevNode.value;
+            prevNode = prevNode.prev;
+            return result;
+        }
     }
 }
