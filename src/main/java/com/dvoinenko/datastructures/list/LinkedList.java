@@ -161,10 +161,10 @@ public class LinkedList extends AbstractList implements Iterable {
     }
 
     public Iterator iterator() {
-        return new LinkedListIterator();
+        return new MyIterator();
     }
 
-    private class LinkedListIterator implements Iterator {
+    private class MyIterator implements Iterator {
 
         private Node nextNode = head;
         private Node prevNode = tail;
@@ -183,18 +183,18 @@ public class LinkedList extends AbstractList implements Iterable {
             if (!hasNext()) {
                 throw new NoSuchElementException("There is no such element in Linked List");
             }
-            Object result = nextNode.value;
+            Object value = nextNode.value;
             nextNode = nextNode.next;
-            return result;
+            return value;
         }
 
         public Object previous() {
             if (!hasPrevious()) {
                 throw new NoSuchElementException("There is no such element in Linked List");
             }
-            Object result = prevNode.value;
+            Object value = prevNode.value;
             prevNode = prevNode.prev;
-            return result;
+            return value;
         }
     }
 }

@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.StringJoiner;
 
-public class ArrayList extends AbstractList implements Iterable {
+public class ArrayList<L> extends AbstractList implements Iterable {
     private static final int INITIAL_CAPACITY = 10;
     private Object[] array;
 
