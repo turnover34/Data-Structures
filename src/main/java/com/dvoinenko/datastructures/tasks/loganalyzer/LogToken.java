@@ -4,37 +4,36 @@ import java.time.LocalDateTime;
 
 class LogToken {
     private LocalDateTime time;
-    private String method;
+    private HttpMethod method;
     private String massage;
 
-    public LogToken(LocalDateTime time, String method, String massage) {
+    public LogToken(LocalDateTime time, HttpMethod method, String massage) {
         this.time = time;
         this.method = method;
         this.massage = massage;
     }
 
+    private void setTime(LocalDateTime time) {
+        this.time = time;
+    }
 
     public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
-        this.time = time;
+    private void setMethod(HttpMethod method) {
+        this.method = method;
     }
 
-    public String getMethod() {
+    public HttpMethod getMethod() {
         return method;
     }
 
-    public void setMethod(String method) {
-        this.method = method;
+    private void setMassage(String massage) {
+        this.massage = massage;
     }
 
     public String getMassage() {
         return massage;
-    }
-
-    public void setMassage(String massage) {
-        this.massage = massage;
     }
 }

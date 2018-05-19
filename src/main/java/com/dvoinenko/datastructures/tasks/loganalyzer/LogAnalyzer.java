@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class LogAnalyzer {
+
+    HttpMethod result;
     public void tokenSearch(String path, LocalDateTime timeFrom, LocalDateTime timeTo) {
 
         try {
@@ -17,7 +19,7 @@ public class LogAnalyzer {
             String currentLine;
             while ((currentLine = bufferReader.readLine()) != null) {
                 LocalDateTime local = readLocalDate(currentLine);
-                String method = readHttpMethod(currentLine);
+                HttpMethod method = readHttpMethod(currentLine);
                 String message = readMessage(currentLine);
                 LogToken logToken = new LogToken(local, method, message);
                 log.add(logToken);
@@ -41,11 +43,11 @@ public class LogAnalyzer {
         return localDateTime;
     }
 
-    public String readHttpMethod(String string) {
+    public HttpMethod readHttpMethod(String string) {
         int start = string.indexOf('"') + 1;
         int end = string.indexOf(' ', start);
         String stringHttpMethod = string.substring(start, end);
-        return stringHttpMethod;
+        return result.getMethod(stringHttpMethod);
     }
 
     public String readMessage(String string) {

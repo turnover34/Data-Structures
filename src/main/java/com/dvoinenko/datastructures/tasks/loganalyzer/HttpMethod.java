@@ -1,26 +1,19 @@
 package com.dvoinenko.datastructures.tasks.loganalyzer;
 
-enum HttpMethod {
-    GET,
-    POST,
-    PUT,
-    DELETE;
+import java.io.Serializable;
 
-    public HttpMethod methodCheck(HttpMethod method) {
-        switch (method) {
-            case GET:
-                method = GET;
-                break;
-            case POST:
-                method = POST;
-                break;
-            case PUT:
-                method = PUT;
-                break;
-            case DELETE:
-                method = DELETE;
-                break;
+enum HttpMethod implements Serializable {
+    GET,
+    POST;
+
+    HttpMethod result;
+    public HttpMethod getMethod(String method) {
+        if (method.equals("GET")) {
+            result = GET;
+        } else if (method.equals("POST")) {
+            result = POST;
         }
-        return method;
+        return result;
     }
+
 }
