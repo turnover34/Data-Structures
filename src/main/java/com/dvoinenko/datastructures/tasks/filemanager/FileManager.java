@@ -13,17 +13,20 @@ package com.dvoinenko.datastructures.tasks.filemanager;
 import java.io.*;
 
 public class FileManager {
-    public static int calculateFiles(String directoryPath) throws IOException {
-        int filesCount = 0;
+    public static long calculateFiles(String directoryPath) throws IOException {
+        long filesCount = 0;
         File path = new File(directoryPath);
         if (!path.exists()) {
             throw new IOException("Such path doesn't exist " + path);
         }
-        for (File file : path.listFiles()) {
-            if (file.isFile()) {
-                filesCount++;
-            } else if (file.isDirectory()){
-                filesCount += calculateFiles(file.getPath());
+        if (path.listFiles() != null) {
+            for (File file : path.listFiles()) {
+                    if (file.isFile()) {
+                        filesCount++;
+                    } else if (file.isDirectory()){
+                        filesCount += calculateFiles(file.getPath());
+                    }
+
             }
         }
         return filesCount;
@@ -35,10 +38,12 @@ public class FileManager {
         if (!path.exists()) {
             throw new IOException("Such path doesn't exist " + path);
         }
-        for (File dir : path.listFiles()) {
-            if (dir.isDirectory()) {
-                dirsCount++;
-                dirsCount += calculateDirs(dir.getPath());
+        if (path.listFiles() != null) {
+            for (File dir : path.listFiles()) {
+                if (dir.isDirectory()) {
+                    dirsCount++;
+                    dirsCount += calculateDirs(dir.getPath());
+                }
             }
         }
         return dirsCount;
@@ -103,6 +108,11 @@ public class FileManager {
         dirToFelete.delete();
     }
 
-
+    public static void main(String[] args) throws IOException {
+       System.out.println(FileManager.calculateFiles("C:\\Windows"));//190809
+       System.out.println(FileManager.calculateDirs("C:\\Windows"));//44267
+       System.out.println(FileManager.calculateFiles("C:\\Java"));//1519
+       System.out.println(FileManager.calculateDirs("C:\\Java"));//136
+    }
 
 }

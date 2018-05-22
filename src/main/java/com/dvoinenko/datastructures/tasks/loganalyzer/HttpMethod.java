@@ -6,11 +6,12 @@ enum HttpMethod implements Serializable {
     GET,
     POST;
 
-    HttpMethod result;
+
     public HttpMethod getMethod(String method) {
-        if (method.equals("GET")) {
+        HttpMethod result = null;
+        if (method.toUpperCase().equals("GET")) {
             result = GET;
-        } else if (method.equals("POST")) {
+        } else if (method.toUpperCase().equals("POST")) {
             result = POST;
         }
         return result;

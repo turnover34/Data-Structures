@@ -4,35 +4,34 @@ import com.dvoinenko.datastructures.list.ArrayList;
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 
 public class LogAnalyzer {
 
     HttpMethod result;
-    public ArrayList<LogToken> tokenSearch(String path, LocalDateTime timeFrom, LocalDateTime timeTo) {
+    public ArrayList<LogToken> tokenSearch(String path, LocalDateTime timeFrom, LocalDateTime timeTo) throws IOException {
         ArrayList<LogToken> log = new ArrayList<>();
+        FileReader fileReader = new FileReader(new File(path));
+        BufferedReader bufferReader = new BufferedReader(fileReader);
         try {
-            File file = new File(path);
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferReader = new BufferedReader(fileReader);
             String currentLine;
             while ((currentLine = bufferReader.readLine()) != null) {
-                LocalDateTime local = readLocalDate(currentLine);
+                LocalDateTime inputDate = readLocalDate(currentLine);
                 HttpMethod method = readHttpMethod(currentLine);
                 String message = readMessage(currentLine);
-                LogToken logToken = new LogToken(local, method, message);
-                if (local.isAfter(timeFrom) && local.isBefore(timeTo)) {
+                LogToken logToken = new LogToken(inputDate, method, message);
+                if (inputDate.isAfter(timeFrom) && inputDate.isBefore(timeTo)) {
                     log.add(logToken);
                 }
             }
         }
 
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
+        finally {
+            bufferReader.close();
+            fileReader.close();
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+
         return log;
     }
 
@@ -57,6 +56,13 @@ public class LogAnalyzer {
         int end = string.indexOf(string.length());
         String message = string.substring(start, end);
         return message;
+    }
+
+    public static void main(String[] args) throws IOException {
+        LogAnalyzer logAnalyzer = new LogAnalyzer();
+        logAnalyzer.tokenSearch("C:\\Users\\Ivan\\IdeaProjects\\datastructures\\target\\classes",
+                LocalDateTime.of(2004, Month.MARCH, 07, 16, 24, 10),
+                LocalDateTime.of(2004, Month.MARCH, 07, 16, 43, 30));
     }
 
 }
