@@ -9,29 +9,31 @@ import java.time.format.DateTimeFormatter;
 public class LogAnalyzer {
 
     HttpMethod result;
-    public void tokenSearch(String path, LocalDateTime timeFrom, LocalDateTime timeTo) {
-
+    public ArrayList<LogToken> tokenSearch(String path, LocalDateTime timeFrom, LocalDateTime timeTo) {
+        ArrayList<LogToken> log = new ArrayList<>();
         try {
             File file = new File(path);
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferReader = new BufferedReader(fileReader);
-            ArrayList<LogToken> log = new ArrayList<>();
             String currentLine;
             while ((currentLine = bufferReader.readLine()) != null) {
                 LocalDateTime local = readLocalDate(currentLine);
                 HttpMethod method = readHttpMethod(currentLine);
                 String message = readMessage(currentLine);
                 LogToken logToken = new LogToken(local, method, message);
-                log.add(logToken);
+                if (local.isAfter(timeFrom) && local.isBefore(timeTo)) {
+                    log.add(logToken);
+                }
             }
         }
+
         catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-
+        return log;
     }
 
     public LocalDateTime readLocalDate(String string) {
