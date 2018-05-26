@@ -13,24 +13,12 @@ class LogToken {
         this.massage = massage;
     }
 
-    private void setTime(LocalDateTime time) {
-        this.time = time;
-    }
-
     public LocalDateTime getTime() {
         return time;
     }
 
-    private void setMethod(HttpMethod method) {
-        this.method = method;
-    }
-
     public HttpMethod getMethod() {
         return method;
-    }
-
-    private void setMassage(String massage) {
-        this.massage = massage;
     }
 
     public String getMassage() {

@@ -6,41 +6,43 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class LogAnalyzer {
+
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy:HH:mm:ss");
 
     HttpMethod result;
     public ArrayList<LogToken> tokenSearch(String path, LocalDateTime timeFrom, LocalDateTime timeTo) throws IOException {
         ArrayList<LogToken> log = new ArrayList<>();
-        FileReader fileReader = new FileReader(new File(path));
-        BufferedReader bufferReader = new BufferedReader(fileReader);
+        BufferedReader bufferReader = new BufferedReader(new FileReader(new File(path)));
         try {
             String currentLine;
             while ((currentLine = bufferReader.readLine()) != null) {
-                LocalDateTime inputDate = readLocalDate(currentLine);
-                HttpMethod method = readHttpMethod(currentLine);
-                String message = readMessage(currentLine);
-                LogToken logToken = new LogToken(inputDate, method, message);
-                if (inputDate.isAfter(timeFrom) && inputDate.isBefore(timeTo)) {
+                LogToken logToken = getToken(currentLine);
+                if (logToken.getTime().isAfter(timeFrom) && logToken.getTime().isBefore(timeTo)) {
                     log.add(logToken);
                 }
             }
         }
 
         finally {
-            bufferReader.close();
-            fileReader.close();
+            if (bufferReader != null) {
+                bufferReader.close();
+            }
         }
-
         return log;
+    }
+
+    private LogToken getToken(String line) {
+        return new LogToken(readLocalDate(line), readHttpMethod(line), readMessage(line));
     }
 
     public LocalDateTime readLocalDate(String string) {
         int start = string.indexOf('[') + 1;
         int end = string.indexOf(' ', start);
         String stringLocalDate = string.substring(start, end);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy:HH:mm:ss");
-        LocalDateTime localDateTime = LocalDateTime.parse(stringLocalDate, formatter);
+        LocalDateTime localDateTime = LocalDateTime.parse(stringLocalDate, formatter.withLocale(Locale.US));
         return localDateTime;
     }
 
