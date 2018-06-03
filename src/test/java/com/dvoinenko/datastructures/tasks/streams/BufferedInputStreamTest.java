@@ -13,6 +13,6 @@ public class BufferedInputStreamTest {
     @Test
     public void readArrayTest() throws FileNotFoundException {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream("log.txt"));
-        
+
     }
 }
