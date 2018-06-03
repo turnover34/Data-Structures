@@ -5,30 +5,39 @@ import java.io.InputStream;
 
 public class ByteArrayInputStream extends InputStream {
 
-    private InputStream inputStream;
+    private byte[] array;
     private int index;
-    private int count;
-    private byte[] buffer;
 
     public ByteArrayInputStream(byte[] buffer) {
-        this.buffer = buffer;
-        this.index = 0;
-        this.count = buffer.length;
+        this.array = buffer;
     }
 
     @Override
     public int read() throws IOException {
-        if (index < count) {
-            return buffer[index++];
-        }
-        else {
+        if (index == array.length) {
             return -1;
         }
+        return array[index++];
     }
 
     @Override
-    public void close() throws IOException {
-        inputStream.close();
+    public int read(byte[] buffer) throws IOException {
+        return read(buffer, 0, buffer.length);
     }
 
+    @Override
+    public int read(byte[] buffer, int off, int len) throws IOException {
+        int unreadedCount = array.length - index;
+        if (array.length == index) {
+            return -1;
+        } else if (len >= unreadedCount) {
+            System.arraycopy(array, index, buffer, off, unreadedCount);
+            index += unreadedCount;
+            return unreadedCount;
+        } else {
+            System.arraycopy(array, index, buffer, off, len);
+            index += len;
+            return len;
+        }
+    }
 }
