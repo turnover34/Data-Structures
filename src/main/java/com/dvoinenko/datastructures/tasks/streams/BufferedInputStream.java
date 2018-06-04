@@ -1,10 +1,8 @@
 package com.dvoinenko.datastructures.tasks.streams;
 
-import java.io.FilterInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
-public class BufferedInputStream extends FilterInputStream {
+public class BufferedInputStream extends InputStream {
     private static final int INITIAL_CAPACITY = 5;
 
     private InputStream inputStream;
@@ -17,12 +15,11 @@ public class BufferedInputStream extends FilterInputStream {
     }
 
     public BufferedInputStream(InputStream inputStream, int size) {
-        super(inputStream);
+        this.inputStream = inputStream;
         if (size <= 0) {
             throw new IllegalArgumentException("buffer size should be over 0 but is: " + size);
         }
         buffer = new byte[size];
-        count = size;
     }
 
     @Override
@@ -67,8 +64,20 @@ public class BufferedInputStream extends FilterInputStream {
     }
 
     @Override
+    public int available() throws IOException {
+        return count - index + inputStream.available();
+    }
+
+    @Override
     public void close() throws IOException {
         inputStream.close();
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream("log.txt"));
+        while (bufferedInputStream.available() != 0) {
+            System.out.println((char) bufferedInputStream.read());
+        }
     }
 
 }
