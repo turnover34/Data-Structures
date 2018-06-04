@@ -12,8 +12,11 @@ import static org.junit.Assert.*;
 
 public class BufferedInputStreamTest {
 
+    public BufferedInputStreamTest() throws FileNotFoundException {
+    }
+
     @Test
-    public void readArrayTest() throws Exception {
+    public void readTest() throws Exception {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream("log.txt"));
         StringBuilder stringBuilder = new StringBuilder();
         int value;
@@ -22,4 +25,17 @@ public class BufferedInputStreamTest {
         }
         System.out.println(stringBuilder.toString());
     }
+
+    @Test
+    public void readArrayTest() throws Exception {
+        InputStream inputStream = new FileInputStream("bist.txt");
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream, 6);
+        int totalByteCount = bufferedInputStream.available();
+        byte[] array = new byte[totalByteCount];
+        bufferedInputStream.read(array, 2, 3);
+        for (byte simpleByte : array) {
+            System.out.println("simple byte "+ (char) simpleByte);
+        }
+    }
+
 }

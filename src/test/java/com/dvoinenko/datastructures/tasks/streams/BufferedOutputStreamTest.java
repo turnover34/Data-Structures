@@ -14,6 +14,8 @@ public class BufferedOutputStreamTest {
         try (BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream("log.txt"))) {
             String content = "Hello !!";
             byte[] contentArray = content.getBytes();
+            assertEquals('H', contentArray[0]);
+            assertEquals('!', contentArray[7]);
 
             bufferedOutputStream.write(contentArray[0]);
             bufferedOutputStream.write(contentArray, 1, contentArray.length -1);
