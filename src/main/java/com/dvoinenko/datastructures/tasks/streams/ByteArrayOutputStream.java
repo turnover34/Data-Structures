@@ -19,9 +19,6 @@ public class ByteArrayOutputStream extends OutputStream {
         buffer = new byte[size];
     }
 
-    public int size() {
-        return count;
-    }
 
     @Override
     public void write(int value) {

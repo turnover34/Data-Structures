@@ -36,17 +36,5 @@ public class ByteArrayInputStreamTest {
         assertEquals(-1, count);
     }
 
-    @Test
-    public void readArrayWithOffTest() throws IOException {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(new byte[] {1, 2, 3, 4, 5, 6, 7, 8});
-        byte[] array = new byte[4];
-        int count = byteArrayInputStream.read(array, 2, 2);
-        assertEquals(2, count);
-        assertEquals(1, array[2]);
-        assertEquals(2, array[3]);
-    }
-
-
-
 }
 

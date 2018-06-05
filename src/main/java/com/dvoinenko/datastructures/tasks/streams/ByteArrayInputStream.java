@@ -5,19 +5,33 @@ import java.io.InputStream;
 
 public class ByteArrayInputStream extends InputStream {
 
-    private byte[] array;
+    private byte[] buffer;
     private int index;
+    private int count;
 
     public ByteArrayInputStream(byte[] buffer) {
-        this.array = buffer;
+        this(buffer, 0, buffer.length);
+    }
+
+    public ByteArrayInputStream(byte[] buffer, int offset, int length) {
+        if ( offset < 0 || length < 0 || offset > buffer.length) {
+            throw new IllegalArgumentException();
+        }
+        this.buffer = buffer;
+        count = offset + length;
+        if (count > buffer.length) {
+            count = buffer.length;
+        }
+
+        index = offset;
     }
 
     @Override
     public int read() throws IOException {
-        if (index == array.length) {
+        if (index == count) {
             return -1;
         }
-        return array[index++];
+        return buffer[index++];
     }
 
     @Override
@@ -26,18 +40,21 @@ public class ByteArrayInputStream extends InputStream {
     }
 
     @Override
-    public int read(byte[] buffer, int off, int len) throws IOException {
-        int unreadedCount = array.length - index;
-        if (array.length == index) {
+    public int read(byte[] array, int off, int len) throws IOException {
+        if (index >= count) {
             return -1;
-        } else if (len >= unreadedCount) {
-            System.arraycopy(array, index, buffer, off, unreadedCount);
+        } /*else if (len >= unreadedCount) {
+            System.arraycopy(array, index, array, off, unreadedCount);
             index += unreadedCount;
             return unreadedCount;
         } else {
-            System.arraycopy(array, index, buffer, off, len);
+            System.arraycopy(array, index, array, off, len);
             index += len;
             return len;
-        }
+        }*/
+        int bytesCount = Math.min(count - index, len);
+        System.arraycopy(buffer, index, array, off, bytesCount);
+        index += bytesCount;
+        return bytesCount;
     }
 }

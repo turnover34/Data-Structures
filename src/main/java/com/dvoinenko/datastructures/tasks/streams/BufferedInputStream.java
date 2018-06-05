@@ -15,10 +15,10 @@ public class BufferedInputStream extends InputStream {
     }
 
     public BufferedInputStream(InputStream inputStream, int size) {
-        this.inputStream = inputStream;
         if (size <= 0) {
             throw new IllegalArgumentException("buffer size should be over 0 but is: " + size);
         }
+        this.inputStream = inputStream;
         buffer = new byte[size];
     }
 

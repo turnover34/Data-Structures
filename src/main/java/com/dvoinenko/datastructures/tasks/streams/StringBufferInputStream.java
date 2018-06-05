@@ -14,17 +14,29 @@ public class StringBufferInputStream extends InputStream {
     }
 
     @Override
+    public int available() {
+        return count - index;
+    }
+
+    @Override
     public int read() throws IOException {
-        if (index == count) {
+        if (index >= count) {
             return -1;
         }
         return (int) (buffer.charAt(index++));
     }
 
+    @Override
+    public int read(byte[] array) {
+        return read(array, 0, array.length);
+    }
+
+
+    @Override
     public int read (byte[] array, int off, int len) {
         if (off < 0 || len < 0 || (off + len > array.length)) {
             throw new ArrayIndexOutOfBoundsException("You entered improper parameters");
-        } else if (index == count) {
+        } else if (index >= count) {
             return -1;
         }
         int toReadCount = Math.min(len, count - index);

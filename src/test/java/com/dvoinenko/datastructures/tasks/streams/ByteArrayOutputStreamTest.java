@@ -10,22 +10,37 @@ import static org.junit.Assert.*;
     public class ByteArrayOutputStreamTest {
         @Test
         public void writeArrayTest() throws IOException {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            String text = "Hello world!";
-            byte[] byteArray = text.getBytes();
-            byteArrayOutputStream.write(byteArray);
-            FileOutputStream fileOutputStream = new FileOutputStream("test.txt");
-            byteArrayOutputStream.writeTo(fileOutputStream);
-            byteArrayOutputStream.close();
-            fileOutputStream.close();
-/*            ByteArrayOutputStream byteArrayOutputStreamSecond = new ByteArrayOutputStream();
-            String oneMoreString = "Java is painful but joyful";
-            byte[] bytes = oneMoreString.getBytes();
-            byteArrayOutputStreamSecond.write(bytes, 20, 6);
-            FileOutputStream fileOutputStreamSecond = new FileOutputStream("test.txt");
-            byteArrayOutputStreamSecond.writeTo(fileOutputStreamSecond);
-            byteArrayOutputStreamSecond.close();
-            fileOutputStreamSecond.close();*/
+            /*FileOutputStream fileOutputStream = null;
+            ByteArrayOutputStream byteArrayOutputStream = null;
+            try {
+                byteArrayOutputStream = new ByteArrayOutputStream();
+                fileOutputStream = new FileOutputStream("test.txt");
+                String text = "Hello world!";
+                byte[] byteArray = text.getBytes();
+                byteArrayOutputStream.write(byteArray);
+                byteArrayOutputStream.writeTo(fileOutputStream);
+            }
+            finally {
+                byteArrayOutputStream.close();
+                fileOutputStream.close();
+            }*/
+
+
+            FileOutputStream fileOutputStreamSecond = null;
+            ByteArrayOutputStream byteArrayOutputStreamSecond = null;
+            try {
+                byteArrayOutputStreamSecond = new ByteArrayOutputStream();
+                fileOutputStreamSecond = new FileOutputStream("test.txt");
+                String oneMoreString = "Java is painful but joyful";
+                byte[] bytes = oneMoreString.getBytes();
+                byteArrayOutputStreamSecond.write(bytes, 20, 6);
+                byteArrayOutputStreamSecond.writeTo(fileOutputStreamSecond);
+            }
+            finally {
+                byteArrayOutputStreamSecond.close();
+                fileOutputStreamSecond.close();
+            }
+
         }
     }
 

@@ -17,6 +17,7 @@ public class BufferedInputStreamTest {
 
     @Test
     public void readTest() throws Exception {
+
         BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream("log.txt"));
         StringBuilder stringBuilder = new StringBuilder();
         int value;

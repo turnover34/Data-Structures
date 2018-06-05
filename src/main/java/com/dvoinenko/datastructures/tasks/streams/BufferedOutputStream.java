@@ -19,15 +19,15 @@ public class BufferedOutputStream extends OutputStream {
             throw new IllegalArgumentException("bufferSize should be over 0 but is: " + bufferSize);
         }
         this.outputStream = outputStream;
-        this.buffer = new byte[bufferSize];
+        buffer = new byte[bufferSize];
     }
 
     @Override
     public void write(int value) throws IOException {
-        buffer[index++] = (byte)value;
         if (index == buffer.length) {
             flush();
         }
+        buffer[index++] = (byte)value;
     }
 
     @Override
