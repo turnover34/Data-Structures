@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
     public class ByteArrayOutputStreamTest {
         @Test
         public void writeArrayTest() throws IOException {
-            /*FileOutputStream fileOutputStream = null;
+/*            FileOutputStream fileOutputStream = null;
             ByteArrayOutputStream byteArrayOutputStream = null;
             try {
                 byteArrayOutputStream = new ByteArrayOutputStream();
@@ -24,6 +24,7 @@ import static org.junit.Assert.*;
                 byteArrayOutputStream.close();
                 fileOutputStream.close();
             }*/
+
 
 
             FileOutputStream fileOutputStreamSecond = null;

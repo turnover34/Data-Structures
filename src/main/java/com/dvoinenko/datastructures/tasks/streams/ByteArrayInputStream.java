@@ -43,15 +43,7 @@ public class ByteArrayInputStream extends InputStream {
     public int read(byte[] array, int off, int len) throws IOException {
         if (index >= count) {
             return -1;
-        } /*else if (len >= unreadedCount) {
-            System.arraycopy(array, index, array, off, unreadedCount);
-            index += unreadedCount;
-            return unreadedCount;
-        } else {
-            System.arraycopy(array, index, array, off, len);
-            index += len;
-            return len;
-        }*/
+        }
         int bytesCount = Math.min(count - index, len);
         System.arraycopy(buffer, index, array, off, bytesCount);
         index += bytesCount;
