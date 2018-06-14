@@ -21,10 +21,9 @@ import static org.junit.Assert.*;
             assertEquals("5", hashMap.put("e", "3"));
         }
 
-/*
         @Test
         public void testPutAll() {
-            hashMap.put(null,"1");
+            //hashMap.put(null,"1");
             hashMap.put("a","2");
             hashMap.put("b","3");
             hashMap.put("c","4");
@@ -37,12 +36,12 @@ import static org.junit.Assert.*;
 
             HashMap hashMapSecond = new HashMap();
 
-            hashMapSecond.put("a","22");
-            hashMapSecond.put(null,"11");
+            hashMapSecond.put("a","2");
+            //hashMapSecond.put(null,"11");
             hashMapSecond.put("m","99");
             hashMapSecond.putAll(hashMap);
 
-            assertEquals("1", hashMapSecond.get(null));
+           // assertEquals("1", hashMapSecond.get(null));
             assertEquals("2", hashMapSecond.get("a"));
             assertEquals("3", hashMapSecond.get("b"));
             assertEquals("4", hashMapSecond.get("c"));
@@ -146,6 +145,6 @@ import static org.junit.Assert.*;
         assertEquals("7", hashMapSecond.get("f"));
         assertEquals("8", hashMapSecond.get("g"));
         assertEquals("99", hashMapSecond.get("m"));
-    }*/
+    }
 
 }

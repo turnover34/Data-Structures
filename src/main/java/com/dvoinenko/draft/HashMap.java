@@ -105,9 +105,7 @@ public class HashMap implements Map {
     public void putAllIfAbsent(HashMap hashMap) {
         for (ArrayList<Entry> bucket : buckets) {
             for (Entry entry : bucket) {
-                if (!containsKey(entry.key)) {
-                    hashMap.put(entry.key, entry.value);
-                }
+                putIfAbsent(entry.key, entry.value);
             }
         }
     }

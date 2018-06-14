@@ -116,6 +116,14 @@ public class HashMap implements Map {
        return null;
     }
 
+    public void putAllIfAbsent(HashMap hashMap) {
+        for (ArrayList<Entry> bucket : buckets) {
+            for (Entry entry : bucket) {
+                putIfAbsent(entry.key, entry.value);
+            }
+        }
+    }
+
     @Override
     public Object get(Object key) {
         if (key == null) {
