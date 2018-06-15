@@ -1,16 +1,16 @@
 package com.dvoinenko.datastructures.hashmap;
 
-public interface Map {
+public interface Map<K, V> {
 
-    Object put(Object key, Object value);
+    Object put(K key, V value);
 
-    Object get(Object key);
+    Object get(K key);
 
     int size();
 
     boolean isEmpty();
 
-    boolean containsKey(Object key);
+    boolean containsKey(K key);
 
 /*    public void putAll(HashMap map);
 

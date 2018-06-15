@@ -2,13 +2,13 @@ package com.dvoinenko.datastructures.hashmap;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class HashMap implements Map {
+public class HashMap<K, V> implements Map<K, V>, Iterable<HashMap.Entry> {
     private static final int DEFAULT_CAPACITY = 5;
     private static final double LOAD_FACTOR = 0.75d;
     private int size;
-    ArrayList<Entry>[] buckets;
-
+    ArrayList<Entry<K, V>>[] buckets;
 
     public HashMap() {
         this(DEFAULT_CAPACITY);
@@ -21,52 +21,47 @@ public class HashMap implements Map {
         }
     }
 
-
     @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
+    public Object put(K key, V value) {
+        ArrayList<Entry<K, V>>[] buckets = this.buckets;
 
-    @Override
-    public Object put(Object key, Object value) {
-        if (size >= (int) (LOAD_FACTOR*buckets.length)) {
+        if (size >= LOAD_FACTOR*buckets.length) {
             resize();
         }
         if (key == null) {
             putForNullKey(value);
         }
 
-        int index = indexFor(key, buckets);
+        int index = indexFor(key, buckets.length);
 
         Object oldValue = null;
-        for (Entry entry : buckets[index]) {
+        for (Entry<K, V> entry : buckets[index]) {
             if (entry.key != null) {
                 if (key.equals(entry.key)) {
                     oldValue = entry.value;
                     entry.value = value;
+                    return oldValue;
                 }
             }
         }
-        buckets[index].add(new Entry(key, value));
         size++;
+        buckets[index].add(new Entry<>(key, value));
         return oldValue;
     }
 
-    private int indexFor(Object key, ArrayList<Entry>[] buckets) {
+    private int indexFor(K key, int bucketsCount) {
         if (key == null) {
             return 0;
         }
         int hashed = key.hashCode();
         hashed ^= (hashed >>> 20) ^ (hashed >>> 12);
         hashed ^= (hashed >>> 7) ^ (hashed >>> 4);
-        return hashed & (buckets.length - 1);
+        return hashed & (bucketsCount - 1);
     }
-
-
 
     private void resize() {
         int newCapacity = buckets.length*2;
-        ArrayList<Entry>[] newBuckets = new ArrayList[newCapacity];
+        ArrayList<Entry<K, V>>[] newBuckets = new ArrayList[newCapacity];
         for (int i = 0; i < newCapacity; i++) {
             newBuckets[i] = new ArrayList<>();
         }
@@ -74,25 +69,24 @@ public class HashMap implements Map {
         buckets = newBuckets;
     }
 
-    private void transfer(ArrayList<Entry>[] newBuckets) {
-        for (ArrayList<Entry> bucket : buckets) {
-            for (Entry entry : bucket) {
-                if (entry.key == null) {
-                    newBuckets[0].add(new Entry(null, entry.value));
-                } else {
-                    int index = indexFor(entry.key, newBuckets);
-                    newBuckets[index].add(new Entry(entry.key, entry.value));
-                }
+    private void transfer(ArrayList<Entry<K, V>>[] newBuckets) {
+        for (ArrayList<Entry<K, V>> bucket : buckets) {
+            for (Entry<K, V> entry : bucket) {
+                K key = entry.key;
+                int bucketsCount = newBuckets.length;
+                int index = indexFor(key, bucketsCount);
+                newBuckets[index].add(entry);
             }
         }
     }
 
-    private Object putForNullKey(Object value) {
-        Object oldValue = null;
-        for (Entry entry : buckets[0]) {
+    private Object putForNullKey(V value) {
+        V oldValue = null;
+        for (Entry<K, V> entry : buckets[0]) {
             if (entry.key == null) {
                 oldValue = entry.value;
                 entry.value = value;
+                return oldValue;
             }
         }
         size++;
@@ -100,37 +94,39 @@ public class HashMap implements Map {
         return oldValue;
     }
     
-    public void putAll(HashMap hashMap) {
-        for (ArrayList<Entry> bucket : buckets) {
-            for (Entry entry : bucket) {
+    public void putAll(HashMap<K, V> hashMap) {
+        for (ArrayList<Entry<K, V>> bucket : buckets) {
+            for (Entry<K, V> entry : bucket) {
                 hashMap.put(entry.key, entry.value);
             }
         }
     }
 
-    public Object putIfAbsent(Object key, Object value) {
+    public Object putIfAbsent(K key, V value) {
        if (containsKey(key)) {
            return get(key);
+       } else{
+           put(key, value);
        }
-       else put(key, value);
        return null;
     }
 
-    public void putAllIfAbsent(HashMap hashMap) {
-        for (ArrayList<Entry> bucket : buckets) {
-            for (Entry entry : bucket) {
+    public void putAllIfAbsent(HashMap<K, V> hashMap) {
+        for (ArrayList<Entry<K, V>> bucket : buckets) {
+            for (Entry<K, V> entry : bucket) {
                 putIfAbsent(entry.key, entry.value);
             }
         }
     }
 
     @Override
-    public Object get(Object key) {
+    public V get(K key) {
         if (key == null) {
             return getForNull();
         }
-        int index = indexFor(key, buckets);
-        for (Entry entry : buckets[index]) {
+
+        int index = indexFor(key, buckets.length);
+        for (Entry<K, V> entry : buckets[index]) {
             if (entry.key != null) {
                 if (key.equals(entry.key)) {
                     return entry.value;
@@ -140,8 +136,8 @@ public class HashMap implements Map {
         return null;
     }
 
-    private Object getForNull() {
-        for (Entry entry : buckets[0]) {
+    private V getForNull() {
+        for (Entry<K, V> entry : buckets[0]) {
             if (entry.key == null) {
                 return entry.value;
             }
@@ -160,16 +156,17 @@ public class HashMap implements Map {
     }
 
     @Override
-    public boolean containsKey(Object key) {
+    public boolean containsKey(K key) {
         if (key == null) {
-            for (Entry entry : buckets[0]) {
+            for (Entry<K, V> entry : buckets[0]) {
                 if (entry.key == null) {
                     return true;
                 }
             }
         } else {
-            for (Entry entry : buckets[indexFor(key, buckets)]) {
-                if (entry.key.equals(key)) {
+            int index = indexFor(key, buckets.length);
+            for (Entry<K, V> entry : buckets[index]) {
+                if (key.equals(entry.key)) {
                     return true;
                 }
             }
@@ -177,11 +174,44 @@ public class HashMap implements Map {
         return false;
     }
 
-    private static class Entry  {
-        private Object key;
-        private Object value;
+    @Override
+    public Iterator<Entry> iterator() {
+        return new MyIterator();
+    }
 
-        public Entry(Object key, Object value) {
+    class MyIterator<E> implements Iterator<Entry> {
+        private int bucketIndex;
+        private int entryIndex;
+        private int index;
+
+        @Override
+        public boolean hasNext() {
+            return index < size;
+        }
+
+        @Override
+        public Entry next() {
+            for (int i = 0; i < buckets.length; i++) {
+                 ArrayList<Entry<K, V>> bucket = buckets[bucketIndex];
+                for (int j = 0; j < bucket.size(); j++) {
+                    Entry<K, V> entry = bucket.get(entryIndex);
+                    index++;
+                    entryIndex++;
+                    return entry;
+                }
+                entryIndex = 0;
+                bucketIndex++;
+            }
+            return null;
+        }
+    }
+
+    public static class Entry<K, V>  {
+        private K key;
+        private V value;
+
+
+        public Entry(K key, V value) {
             this.key = key;
             this.value = value;
         }

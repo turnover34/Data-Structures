@@ -2,6 +2,8 @@ package com.dvoinenko.datastructures.hashmap;
 
 import org.junit.Test;
 
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 
@@ -75,11 +77,9 @@ import static org.junit.Assert.*;
             hashMap.put("c", "3");
             hashMap.put("d", "4");
             hashMap.put("a", "5");
-            hashMap.get("ab");
-            hashMap.isEmpty();
-            hashMap.containsKey("ab");
 
-            assertEquals(5, hashMap.size());
+
+            assertEquals(4, hashMap.size());
 
         }
 
@@ -146,5 +146,6 @@ import static org.junit.Assert.*;
         assertEquals("8", hashMapSecond.get("g"));
         assertEquals("99", hashMapSecond.get("m"));
     }
+
 
 }

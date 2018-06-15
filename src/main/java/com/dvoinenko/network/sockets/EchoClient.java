@@ -10,8 +10,8 @@ public class EchoClient {
             BufferedReader input = new BufferedReader(new InputStreamReader(System.in))) {
             String userInput;
             while ((userInput = input.readLine()) != null) {
-                System.out.println(userInput);
-                out.println(userInput);
+                out.write(userInput);
+                System.out.print(input);
             }
 
         } catch (IOException e) {
