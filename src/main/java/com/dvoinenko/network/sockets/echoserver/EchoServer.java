@@ -1,4 +1,4 @@
-package com.dvoinenko.network.sockets;
+package com.dvoinenko.network.sockets.echoserver;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -10,10 +10,10 @@ public class EchoServer {
              Socket socket = serverSocket.accept();
              BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()))) {
-             String input;
-             while ((input = bufferedReader.readLine()) != null) {
-                 printWriter.write("echo");
-                 printWriter.write(input);
+             while (true) {
+                 String input = bufferedReader.readLine();
+                 printWriter.write("echo: " + input + "\n");
+                 printWriter.flush();
              }
         }
     }
