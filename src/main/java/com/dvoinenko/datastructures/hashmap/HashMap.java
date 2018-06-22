@@ -4,7 +4,7 @@ package com.dvoinenko.datastructures.hashmap;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class HashMap<K, V> implements Map<K, V>, Iterable<HashMap.Entry> {
+public class HashMap<K, V> implements Map<K, V>, Iterable<HashMap.Entry<K, V>> {
     private static final int DEFAULT_CAPACITY = 5;
     private static final double LOAD_FACTOR = 0.75d;
     private int size;
@@ -63,7 +63,7 @@ public class HashMap<K, V> implements Map<K, V>, Iterable<HashMap.Entry> {
         int newCapacity = buckets.length*2;
         ArrayList<Entry<K, V>>[] newBuckets = new ArrayList[newCapacity];
         for (int i = 0; i < newCapacity; i++) {
-            newBuckets[i] = new ArrayList<>();
+            newBuckets[i] = new ArrayList<>(1);
         }
         transfer(newBuckets);
         buckets = newBuckets;
@@ -89,8 +89,8 @@ public class HashMap<K, V> implements Map<K, V>, Iterable<HashMap.Entry> {
                 return oldValue;
             }
         }
+        buckets[0].add( new Entry<K, V>(null, value));
         size++;
-        buckets[0].add( new Entry(null, value));
         return oldValue;
     }
     
@@ -175,33 +175,32 @@ public class HashMap<K, V> implements Map<K, V>, Iterable<HashMap.Entry> {
     }
 
     @Override
-    public Iterator<Entry> iterator() {
+    public Iterator<Entry<K, V>> iterator() {
         return new MyIterator();
     }
 
     class MyIterator<E> implements Iterator<Entry> {
         private int bucketIndex;
-        private int entryIndex;
-        private int index;
+        private Iterator<Entry<K, V>> bucketIterator;
+        private int passedElementsCount;
 
         @Override
         public boolean hasNext() {
-            return index < size;
+            return passedElementsCount < size;
         }
 
         @Override
-        public Entry next() {
+        public Entry<K, V> next() {
             for (int i = 0; i < buckets.length; i++) {
                  ArrayList<Entry<K, V>> bucket = buckets[bucketIndex];
-                for (int j = 0; j < bucket.size(); j++) {
-                    Entry<K, V> entry = bucket.get(entryIndex);
-                    index++;
-                    entryIndex++;
-                    return entry;
+                bucketIterator = bucket.iterator();
+                while (bucketIterator.hasNext()) {
+                    passedElementsCount++;
+                    return bucketIterator.next();
                 }
-                entryIndex = 0;
                 bucketIndex++;
             }
+            passedElementsCount++;
             return null;
         }
     }
@@ -210,8 +209,16 @@ public class HashMap<K, V> implements Map<K, V>, Iterable<HashMap.Entry> {
         private K key;
         private V value;
 
+        public K getKey() {
+            return key;
+        }
 
-        public Entry(K key, V value) {
+        public V getValue() {
+            return value;
+        }
+
+
+        private Entry(K key, V value) {
             this.key = key;
             this.value = value;
         }

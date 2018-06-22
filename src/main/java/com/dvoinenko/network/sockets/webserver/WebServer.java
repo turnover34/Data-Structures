@@ -54,7 +54,7 @@ public class WebServer {
                 while ((fileLine = reader.readLine()) != null) {
                     writer.write(fileLine);
                 }
-                writer.write("\n");
+                writer.newLine();
             }
         }
     }
