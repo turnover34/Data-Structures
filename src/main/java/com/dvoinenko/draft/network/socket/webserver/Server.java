@@ -1,31 +1,36 @@
 package com.dvoinenko.draft.network.socket.webserver;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
     private int port;
-    private String resoursePath;
+    private String path;
+    private ResourceReader resourceReader;
 
 
-
-
-    private void setPort(int port) {
+    public void setPort(int port) {
         this.port = port;
     }
-    private void setResoursePath(String resoursePath) {
-        this.resoursePath = resoursePath;
-    }
-    private void start() throws IOException {
-        ServerSocket serverSocket = new ServerSocket(port);
-        while (true) {
-            Socket socket = serverSocket.accept();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            RequestHandler requestHandler = new RequestHandler(reader, writer);
-            requestHandler.handle();
 
+    public void setResourcePath(String path) {
+        this.path = path;
+    }
+
+    public void start() throws IOException {
+        try (ServerSocket server = new ServerSocket(port)) {
+            while (true) {
+                try (Socket socket = server.accept();
+                     BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                     BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(socket.getOutputStream())) {
+                        RequestHandler handler = new RequestHandler();
+                        handler.handle();
+                }
+            }
         }
     }
 }

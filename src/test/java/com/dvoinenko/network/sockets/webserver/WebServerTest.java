@@ -1,10 +1,9 @@
 package com.dvoinenko.network.sockets.webserver;
 
+import com.dvoinenko.draft.network.socket.webserver.WebServer;
 import org.junit.Test;
 
 import java.io.IOException;
-
-import static org.junit.Assert.*;
 
 public class WebServerTest {
     @Test

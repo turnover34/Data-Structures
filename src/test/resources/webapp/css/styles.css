@@ -1,0 +1,157 @@
+body {
+    font-family: Myriad Pro, sans-serif;
+}
+
+.header {
+    padding-top: 79px;
+}
+
+.container {
+    width: 1280px;
+    margin: 0 auto;
+}
+
+.logo-text {
+    font-size: 80px;
+    margin-bottom: 79px;
+}
+
+.blue-text {
+    color: #4bcaff;
+}
+
+.top-menu {
+    background-color:  #35444f;
+}
+
+.top-menu-item {
+    display: inline-block;
+    font-size: 24px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+}
+
+.top-menu-link {
+    text-decoration: none;
+    color: white;
+}
+
+.top-menu-item:hover {
+    background-color: #222f3a;
+    border-left: 1px solid #818181;
+    border-right: 1px solid #818181; 
+    
+}
+
+.main {
+    margin-top: 50px;
+    margin-bottom: 233px;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-sidebar {
+    flex: 1 1 344px;
+    margin-right: 53px;
+}
+
+.left-menu {
+    border: 1px solid  #35444f;
+    
+}
+
+.left-menu-item {
+    padding-left: 25px; 
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.left-menu-link {
+    text-decoration: none;
+    color: #485863;
+    font-size: 27px;
+}
+
+.left-menu-item:hover {
+    background-color: grey;
+}
+
+.left-menu-item:hover a {
+    padding-left: 40px;
+}
+
+.content {
+    flex: 1 1 885px;
+}
+
+.content-main-img {
+    padding: 75px;
+    text-align: center;
+    border: 1px solid  #35444f;
+    margin-bottom: 50px;  
+}
+
+.content-text {
+    text-align: justify;
+    line-height: 24px;
+    font-size: 18px;
+}
+
+.footer {
+    display: flex;
+    padding-top: 22px;
+    padding-bottom: 22px;
+    background-color: #b5b8bb;
+    margin-bottom: 55px;
+    justify-content:space-between;
+    padding: 22px 40px;
+}
+
+.footer-menu-item {
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.footer-menu-link {
+    text-decoration: none;
+    color: #0c1927;
+}
+
+.footer-menu-link:hover {
+    color: #3181a6;
+    border-bottom: 1px solid #3181a6;
+}
+
+.footer-menu-link, .copyright {
+    font-size: 28px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
